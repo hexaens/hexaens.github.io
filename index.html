@@ -1,61 +1,234 @@
-<!DOCTYPE html><html lang="ko"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HEXAENS | 태양광 전기공사업</title>
-<link rel="stylesheet" href="assets/style.css">
-</head><body>
-<header>
-  <div class="container nav">
-    <a class="brand" href="index.html">
-  <img src="assets/img/헥사이엔에스_로고.png" alt="HEXAENS 로고" style="height:100px;">
-</a>
-    <nav class="menu">
-      <a href="about.html">회사소개</a>
-      <a href="services.html">사업분야</a>
-      <a href="projects.html">시공사례</a>
-      <a href="contact.html" class="btn">문의</a>
-    </nav>
-  </div>
-</header>
+import React from "react";
 
-<section class="hero">
-  <div class="container wrap">
-    <div>
-      <h1>태양광 전기공사, 품질로 증명</h1>
-      <p>발전사업 EPC·O&M·인허가를 한 번에. 안전·법규·품질을 기준으로 시공합니다.</p>
-      <a class="btn" href="contact.html">견적 문의</a>
-      <a class="btn outline" href="projects.html">시공사례</a>
+// 단일 파일 스타터: Next.js / CRA 어디서든 사용 가능
+// - TailwindCSS 기준 클래스 사용(미적 감각: 깔끔, 그리드 기반)
+// - 외부 라이브러리 불필요. a[href="#섹션"] 앵커 스크롤
+// - 섹션: 헤더, 히어로, 서비스, 사업소개, 포트폴리오, 뉴스/공지, 문의/오시는길, 푸터
+
+const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
+  <a href={href} className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-black rounded-md">
+    {children}
+  </a>
+);
+
+const SectionTitle = ({ title, subtitle }: { title: string; subtitle?: string }) => (
+  <div className="mb-8">
+    <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900">{title}</h2>
+    {subtitle ? <p className="mt-2 text-gray-600 max-w-2xl">{subtitle}</p> : null}
+  </div>
+);
+
+const Card = ({ children }: { children: React.ReactNode }) => (
+  <div className="rounded-2xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow p-6 h-full">{children}</div>
+);
+
+const Stat = ({ label, value }: { label: string; value: string }) => (
+  <div className="text-center">
+    <div className="text-2xl md:text-3xl font-bold text-gray-900">{value}</div>
+    <div className="mt-1 text-xs text-gray-500">{label}</div>
+  </div>
+);
+
+export default function CompanyLanding() {
+  return (
+    <div className="min-h-screen bg-white text-gray-900">
+      {/* Header */}
+      <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 bg-white/90 border-b border-gray-100">
+        <div className="mx-auto max-w-7xl px-4 md:px-6">
+          <div className="flex h-16 items-center justify-between">
+            <a href="#top" className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-black rounded-md">
+              <div className="h-8 w-8 rounded-xl bg-black"></div>
+              <span className="font-semibold">회사명(로고)</span>
+            </a>
+            <nav className="hidden md:flex items-center">
+              <NavLink href="#services">서비스</NavLink>
+              <NavLink href="#about">사업소개</NavLink>
+              <NavLink href="#portfolio">포트폴리오</NavLink>
+              <NavLink href="#news">공지</NavLink>
+              <NavLink href="#contact">문의</NavLink>
+            </nav>
+            <a href="#contact" className="hidden md:inline-flex items-center rounded-xl bg-black px-4 py-2 text-white text-sm font-medium hover:opacity-90 focus-visible:ring-2 focus-visible:ring-black">
+              문의하기
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section id="top" className="relative overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <div className="h-full w-full bg-gradient-to-b from-gray-50 to-white" />
+        </div>
+        <div className="mx-auto max-w-7xl px-4 md:px-6 py-16 md:py-24">
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            <div>
+              <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+                도시 공간을 바꾸는 <span className="underline decoration-black decoration-4 underline-offset-4">디지털·건설</span> 솔루션
+              </h1>
+              <p className="mt-5 text-gray-600 max-w-xl">
+                미디어 플랫폼, 디지털 사이니지, 건설·개발, 해외사업까지. 기획부터 시공·운영까지 원스톱으로 제공합니다.
+              </p>
+              <div className="mt-6 flex gap-3">
+                <a href="#portfolio" className="inline-flex items-center rounded-xl bg-black px-5 py-3 text-white text-sm font-semibold hover:opacity-90 focus-visible:ring-2 focus-visible:ring-black">사례 보기</a>
+                <a href="#services" className="inline-flex items-center rounded-xl border border-gray-300 px-5 py-3 text-sm font-semibold hover:bg-gray-50">무엇을 하나요</a>
+              </div>
+              <div className="mt-10 grid grid-cols-3 gap-6">
+                <Stat label="누적 프로젝트" value="128+" />
+                <Stat label="파트너사" value="45" />
+                <Stat label="연간 유지보수" value="99.9%" />
+              </div>
+            </div>
+            <div className="relative">
+              <div className="aspect-[4/3] w-full rounded-3xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+                <div className="h-full w-full grid place-content-center text-center p-6">
+                  <div className="text-sm text-gray-500">배경 영상/이미지 영역</div>
+                  <div className="mt-2 text-xs text-gray-400">1200×900 권장 · WEBP/AVIF</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section id="services" className="py-16 md:py-24 bg-gray-50">
+        <div className="mx-auto max-w-7xl px-4 md:px-6">
+          <SectionTitle title="서비스" subtitle="미디어 플랫폼부터 디지털 사이니지, 공간 개발까지 핵심 역량을 모듈화했습니다." />
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { title: "미디어 플랫폼", desc: "옥외·실내 LED, DID 네트워크 설계·운영", icon: "📺" },
+              { title: "디지털 사이니지", desc: "콘텐츠 CMS, 원격 모니터링, 실시간 제어", icon: "🖥️" },
+              { title: "건설·개발", desc: "인허가·시공·감리 일괄 수행(EPC)", icon: "🏗️" },
+              { title: "해외사업", desc: "해외 파트너십, 공급망·통관·현지화", icon: "🌏" },
+              { title: "유지보수(O&M)", desc: "가동률 99.9% 목표의 정기점검", icon: "🛠️" },
+              { title: "데이터/리포팅", desc: "성과 대시보드, SLA 리포트 제공", icon: "📊" },
+            ].map((s) => (
+              <Card key={s.title}>
+                <div className="text-3xl">{s.icon}</div>
+                <h3 className="mt-3 text-lg font-semibold">{s.title}</h3>
+                <p className="mt-2 text-sm text-gray-600">{s.desc}</p>
+                <a href="#contact" className="mt-4 inline-flex text-sm font-semibold text-gray-900 underline decoration-2 underline-offset-4">상담 요청</a>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About / Business Lines */}
+      <section id="about" className="py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 md:px-6">
+          <SectionTitle title="사업소개" subtitle="건설·개발·해외 세 축으로 확장하며 프로젝트 전 과정을 책임집니다." />
+          <div className="grid md:grid-cols-3 gap-6">
+            {["건설", "개발", "해외"].map((col) => (
+              <Card key={col}>
+                <h3 className="text-lg font-semibold">{col}</h3>
+                <ul className="mt-3 space-y-2 text-sm text-gray-600 list-disc list-inside">
+                  <li>범위/역할 요약</li>
+                  <li>핵심 프로세스</li>
+                  <li>차별화 포인트</li>
+                </ul>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Portfolio */}
+      <section id="portfolio" className="py-16 md:py-24 bg-gray-50">
+        <div className="mx-auto max-w-7xl px-4 md:px-6">
+          <SectionTitle title="포트폴리오" subtitle="분야별 대표 사례를 선별해 보여드립니다. 썸네일을 클릭하면 상세 페이지로 이동합니다." />
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <a key={i} href="#" className="group block">
+                <div className="aspect-[4/3] w-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+                  <div className="h-full w-full grid place-content-center text-gray-400 text-sm">썸네일 {i + 1}</div>
+                </div>
+                <div className="mt-2 flex items-center justify-between">
+                  <div className="text-sm font-medium">프로젝트 {i + 1}</div>
+                  <span className="text-xs text-gray-500">카테고리</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* News / Notices */}
+      <section id="news" className="py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 md:px-6">
+          <SectionTitle title="뉴스 · 공지" subtitle="보도자료, 업데이트, 채용 공지를 한 곳에서 관리합니다." />
+          <div className="grid md:grid-cols-3 gap-6">
+            {[1, 2, 3].map((n) => (
+              <Card key={n}>
+                <div className="text-xs text-gray-500">2025-09-03</div>
+                <h3 className="mt-2 font-semibold">공지 제목 {n}</h3>
+                <p className="mt-2 text-sm text-gray-600 line-clamp-3">간단한 요약 텍스트가 들어갑니다. CMS 연동 시 자동으로 갱신됩니다.</p>
+                <a href="#" className="mt-4 inline-flex text-sm font-semibold text-gray-900 underline decoration-2 underline-offset-4">자세히 보기</a>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section id="contact" className="py-16 md:py-24 bg-gray-50">
+        <div className="mx-auto max-w-7xl px-4 md:px-6">
+          <SectionTitle title="문의 / 오시는 길" subtitle="폼 제출 시 담당자가 영업일 기준 빠르게 연락드립니다." />
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card>
+              <form className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium">이름</label>
+                    <input className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black" placeholder="홍길동" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium">연락처</label>
+                    <input className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black" placeholder="010-0000-0000" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium">이메일</label>
+                  <input type="email" className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black" placeholder="you@example.com" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium">문의내용</label>
+                  <textarea className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 h-28 focus:outline-none focus:ring-2 focus:ring-black" placeholder="프로젝트 개요를 알려주세요." />
+                </div>
+                <div className="flex items-center gap-2">
+                  <input id="agree" type="checkbox" className="h-4 w-4 rounded border-gray-300" />
+                  <label htmlFor="agree" className="text-sm text-gray-600">개인정보 수집·이용에 동의합니다.</label>
+                </div>
+                <button type="button" className="w-full md:w-auto rounded-xl bg-black px-5 py-3 text-white text-sm font-semibold hover:opacity-90">문의 보내기</button>
+              </form>
+            </Card>
+            <Card>
+              <div className="aspect-[4/3] w-full rounded-xl overflow-hidden">
+                <div className="h-full w-full grid place-content-center text-gray-400 text-sm">지도/약도(카카오·네이버 iFrame) 자리</div>
+              </div>
+              <div className="mt-4 text-sm text-gray-600">
+                <div>주소: 인천광역시 서구 뱃길1로 21, 101호</div>
+                <div>사업자등록번호: 140-88-03579</div>
+                <div>대표전화: 032-567-9904 · 이메일: HEXAENS@hexaens.com</div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-gray-100">
+        <div className="mx-auto max-w-7xl px-4 md:px-6 py-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="text-sm text-gray-500">© {new Date().getFullYear()} 회사명. All rights reserved.</div>
+            <div className="flex items-center gap-4 text-sm text-gray-600">
+              <a href="#" className="hover:text-black">개인정보처리방침</a>
+              <a href="#" className="hover:text-black">이용약관</a>
+              <a href="#contact" className="hover:text-black">문의</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
-    <div><img src="assets/img/hero.jpg" alt="현장 전경"></div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <h2>왜 HEXAENS인가</h2>
-    <div class="grid3">
-      <div class="card"><h3>KEC·KS 준수</h3><p>전기설비 규정 준수.</p></div>
-      <div class="card"><h3>원스톱 인허가</h3><p>접수→승인→준공까지 지원.</p></div>
-      <div class="card"><h3>O&M 체계</h3><p>정기점검, 출력진단.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="gallery container">
-  <h2>시공사례</h2>
-  <div class="grid4">
-    <img src="assets/img/p1.jpg" alt="">
-    <img src="assets/img/p2.jpg" alt="">
-    <img src="assets/img/p3.jpg" alt="">
-    <img src="assets/img/p4.jpg" alt="">
-  </div>
-</section>
-
-<footer>
-  <div class="container">
-    <div>ⓒ HEXAENS | 사업자등록번호 140-88-03579 | 대표 송상범</div>
-    <div>032-567-9904 | hexaens@hexaens.com</div>
-  </div>
-</footer>
-</body></html>
-
-
+  );
+}
